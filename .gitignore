@@ -1,0 +1,34 @@
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Environment variables / secrets
+.env
+
+# Model files (large binaries, downloaded separately)
+models/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+*.swp
+
+# Logs
+*.log
+
+# Optional: generated index/embeddings (if you regenerate via ingest.py rather than commit)
+data/processed/index.pkl
