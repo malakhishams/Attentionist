@@ -20,7 +20,7 @@ def ask_llm(prompt, model="gemini-2.5-flash", system_prompt=None):
     if system_prompt:
         messages.append({"role":"system", "content":system_prompt})
 
-    messages.append({"role":"system", "content":prompt})
+    messages.append({"role":"user", "content":prompt})
 
     response = client.chat.completions.create(model=model,messages=messages)
 
