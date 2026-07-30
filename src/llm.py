@@ -5,9 +5,15 @@ from dotenv import load_dotenv
 load_dotenv()
 
 api_key = os.environ["GEMINI_API_KEY"]
+new_api_key = os.environ["NEW_GEMINI_API_KEY"]
 
 client = OpenAI(
     api_key=api_key,
+    base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+)
+
+new_client = OpenAI(
+    api_key=new_api_key,
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 )
 
@@ -53,4 +59,3 @@ Answer based only on the context above."""
     return system_prompt, user_prompt
 
 #####################################################################################################
-

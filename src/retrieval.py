@@ -1,6 +1,10 @@
 import pickle
 from pathlib import Path
-from embedder import Embedder
+import sys
+BASE_DIR = Path(__file__).resolve().parent.parent
+sys.path.append(str(BASE_DIR))
+from src.embedder import Embedder
+
 
 def load_index(index_path="data/processed/index.pkl"):
     """Loads the pickled minsearch index built by ingest.py."""
@@ -44,6 +48,9 @@ def retrieve(query, index, embedder, top_k=5):
 if __name__ == "__main__":
 
     index = load_index()
+    lengths = [len(chunk["content"]) for chunk in index.docs]
+
+    print(f"Total chunks: {len(index.docs)}")
     embedder = load_embedder()
     results = retrieve("How does Reformer reduce attention complexity?", index, embedder)
     for r in results:
