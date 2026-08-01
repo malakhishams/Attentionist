@@ -1,0 +1,52 @@
+[
+  {
+    "question": "How many training sentences were used from the Wall Street Journal (WSJ) portion of the Penn Treebank for English constituency parsing?",
+    "start": 26400,
+    "filename": "1706.03762v7"
+  },
+  {
+    "question": "What beam search parameters were used for the models?",
+    "start": 23400,
+    "filename": "1706.03762v7"
+  },
+  {
+    "question": "What is the purpose of keeping 10% of masked words unchanged during the training procedure?",
+    "start": 50000,
+    "filename": "1810.04805v2"
+  },
+  {
+    "question": "For how many NLP tasks does BERT advance the state of the art?",
+    "start": 4600,
+    "filename": "1810.04805v2"
+  },
+  {
+    "question": "What kind of results does the Transformer architecture yield in natural language processing?",
+    "start": 1000,
+    "filename": "2001.04451v2"
+  },
+  {
+    "question": "Can large Reformer models fit into memory and train on a single core with long sequences?",
+    "start": 29600,
+    "filename": "2001.04451v2"
+  },
+  {
+    "question": "What is the performance of Longformer-large on long context QA tasks such as WikiHop, TriviaQA, and HotpotQA?",
+    "start": 33000,
+    "filename": "2004.05150v2"
+  },
+  {
+    "question": "Which papers listed in this excerpt were published in 2019?",
+    "start": 50000,
+    "filename": "2004.05150v2"
+  },
+  {
+    "question": "Is the normal force on an object equal to the gravitational force applied on it?",
+    "start": 192200,
+    "filename": "2005.14165v4"
+  },
+  {
+    "question": "What is the performance of GPT-3 in the zero-shot, one-shot, and few-shot settings?",
+    "start": 44000,
+    "filename": "2005.14165v4"
+  }
+]

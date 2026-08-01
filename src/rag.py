@@ -1,5 +1,10 @@
-from llm import ask_llm, build_prompt
-from retrieval import retrieve, load_index, load_embedder
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
+from src.llm import ask_llm, build_prompt
+from src.retrieval import retrieve, load_index, load_embedder
 
 def answer_query(query, top_k=5):
     """
