@@ -89,7 +89,7 @@ def build_ground_truth(n_per_paper):
         question = generate_quesion(chunk["content"])
         ground_truth.append({
             "question" : question,
-            "chunk_id": chunk.get("id", i), 
+            "start": chunk["start"], 
             "filename" : chunk["filename"]
         })
         save_ground_truth(ground_truth)

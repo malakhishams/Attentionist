@@ -1,112 +1,102 @@
 [
   {
-    "question": "What value was used for `warmup_steps`?",
-    "chunk_id": 0,
+    "question": "What beam search parameters were used for the models?",
+    "start": 23400,
     "filename": "1706.03762v7"
   },
   {
-    "question": "Who authored \"Adam: A method for stochastic optimization\"?",
-    "chunk_id": 1,
+    "question": "How many training sentences were used from the Wall Street Journal (WSJ) portion of the Penn Treebank for English constituency parsing?",
+    "start": 26400,
     "filename": "1706.03762v7"
   },
   {
-    "question": "What are the three desiderata considered when motivating the use of self-attention layers?",
-    "chunk_id": 2,
+    "question": "What characteristic is noted about the attentions for the word 'its'?",
+    "start": 37800,
     "filename": "1706.03762v7"
   },
   {
-    "question": "What types of neural networks are established as state of the art in sequence modeling and transduction problems?",
-    "chunk_id": 3,
+    "question": "How does the number of operations required to relate signals from two arbitrary input or output positions grow in the distance between positions for ConvS2S and ByteNet?",
+    "start": 4800,
     "filename": "1706.03762v7"
   },
   {
-    "question": "What are the arguments against training separate LTR and RTL models and concatenating them, similar to ELMo?",
-    "chunk_id": 4,
+    "question": "How many NLP tasks does BERT advance the state of the art for?",
+    "start": 5000,
     "filename": "1810.04805v2"
   },
   {
-    "question": "What objectives have been used to pre-train word embedding vectors?",
-    "chunk_id": 5,
+    "question": "For how many NLP tasks does BERT advance the state of the art?",
+    "start": 4600,
     "filename": "1810.04805v2"
   },
   {
-    "question": "What fine-tuning parameters were used for the model?",
-    "chunk_id": 6,
+    "question": "What year was the paper \"Squad: 100,000+ questions for machine comprehension of text\" published?",
+    "start": 45000,
     "filename": "1810.04805v2"
   },
   {
-    "question": "What is the title of the paper published by Samuel R. Bowman, Gabor Angeli, Christopher Potts, and Christopher D. Manning in 2015?",
-    "chunk_id": 7,
+    "question": "How many parameters does BERT BASE contain?",
+    "start": 32800,
     "filename": "1810.04805v2"
   },
   {
-    "question": "On what types of tasks was Reformer evaluated, and how did its performance and efficiency compare to the full Transformer?",
-    "chunk_id": 8,
+    "question": "What methods have been explored to reduce the computational and memory requirements of Transformer models?",
+    "start": 23000,
     "filename": "2001.04451v2"
   },
   {
-    "question": "When and where was this paper published as a conference paper?",
-    "chunk_id": 9,
+    "question": "Can large Reformer models fit into memory and train on a single core with long sequences?",
+    "start": 29600,
     "filename": "2001.04451v2"
   },
   {
-    "question": "How does the Reformer make swapping layer parameters to and from CPU memory efficient despite slow memory transfer?",
-    "chunk_id": 10,
+    "question": "On which tasks were the experiments run?",
+    "start": 24800,
     "filename": "2001.04451v2"
   },
   {
-    "question": "What are the sacreBLEU scores for the various models listed?",
-    "chunk_id": 11,
+    "question": "What kind of results does the Transformer architecture yield in natural language processing?",
+    "start": 1000,
     "filename": "2001.04451v2"
   },
   {
-    "question": "How does Longformer-large's performance on long context QA tasks like WikiHop, TriviaQA, and HotpotQA compare to the current state-of-the-art?",
-    "chunk_id": 12,
+    "question": "What performance achievements does the pretrained Longformer demonstrate?",
+    "start": 1000,
     "filename": "2004.05150v2"
   },
   {
-    "question": "What is the observed impact of different window size configurations per layer on BPC performance?",
-    "chunk_id": 13,
+    "question": "What is the performance of Longformer-large on long context QA tasks such as WikiHop, TriviaQA, and HotpotQA?",
+    "start": 33000,
     "filename": "2004.05150v2"
   },
   {
-    "question": "Why is global attention added to the model's attention mechanism?",
-    "chunk_id": 14,
+    "question": "What sequence length is possible on current GPUs?",
+    "start": 23200,
     "filename": "2004.05150v2"
   },
   {
-    "question": "What is the BPC (Bits Per Character) score for \"Our Longformer\" on the enwik8 dataset?",
-    "chunk_id": 15,
+    "question": "What is the starting sequence length used for training the model?",
+    "start": 18800,
     "filename": "2004.05150v2"
   },
   {
-    "question": "How many participants were included in the study?",
-    "chunk_id": 16,
+    "question": "Who originally demonstrated few-shot learning occurs in language models?",
+    "start": 143400,
     "filename": "2005.14165v4"
   },
   {
-    "question": "What is the structure of the formatted dataset examples for arithmetic tasks?",
-    "chunk_id": 17,
+    "question": "What does the LAMBADA dataset test?",
+    "start": 37200,
     "filename": "2005.14165v4"
   },
   {
-    "question": "What is the approximate energy cost of a trained model in kW-hr?",
-    "chunk_id": 18,
+    "question": "Why are the forest glades \"all the more\"?",
+    "start": 166800,
     "filename": "2005.14165v4"
   },
   {
-    "question": "What are the values listed for Cycled Letters acc?",
-    "chunk_id": 19,
+    "question": "Why is scaling pure self-supervised prediction likely to hit limits?",
+    "start": 109000,
     "filename": "2005.14165v4"
-  },
-  {
-    "question": "Which model achieved the highest accuracy in both (U) and (B) cases on the protein dataset?",
-    "chunk_id": 20,
-    "filename": "2009.14794v4"
-  },
-  {
-    "question": "What condition must 'm' satisfy for the inequality ∥ˆB− B∥∞≤δ to hold with any constant probability?",
-    "chunk_id": 21,
-    "filename": "2009.14794v4"
   }
 ]
