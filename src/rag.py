@@ -22,7 +22,7 @@ def answer_query(query, top_k=5):
 
     sources = [ chunk["filename"] for chunk in chunks ]
 
-    return answer, sources
+    return answer, sources, chunks
 
 ##################################################
 

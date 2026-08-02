@@ -21,12 +21,13 @@ def generate_rag_answer(sample):
 
     for i, item in enumerate(sample):
         print(f"[{i+1}/{len(sample)}] {item['question'][:60]}...")
-        answer, sources = answer_query(item["question"])
+        answer, sources, chunks = answer_query(item["question"])
         result.append({
             "question": item["question"],
             "filename": item["filename"],
             "rag_answer": answer,
-            "sources": sources
+            "sources": sources,
+            "retrieved_context": [c["content"] for c in chunks]
         })
         time.sleep(13)
     return result
