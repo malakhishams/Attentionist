@@ -6,6 +6,10 @@ This project was developed as the final project for the **DataTalksClub LLM Zoom
 
 ---
 
+## Demo
+
+![Attentionist Demo](docs/demo.png)
+
 # ✨ Features
 
 * 📚 Knowledge base built from **9 influential transformer and attention research papers**
