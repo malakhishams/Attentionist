@@ -13,7 +13,7 @@ This project was developed as the final project for the **DataTalksClub LLM Zoom
 # ✨ Features
 
 * 📚 Knowledge base built from **9 influential transformer and attention research papers**
-* 🔍 Semantic retrieval using vector embeddings
+* 🔍 Semantic retrieval using local ONNX vector embeddings + `minsearch`
 * 🤖 Grounded answer generation with **Google Gemini**
 * 💬 Interactive chat interface built with **Streamlit**
 * 📖 Source citations for every generated response
@@ -55,7 +55,7 @@ Attentionist retrieves information from the following research papers:
           Query Embedding Generation
                      │
                      ▼
-          Vector Database Retrieval
+          Vector Search Retrieval (minsearch)
                      │
                      ▼
          Top-k Relevant Document Chunks
@@ -79,8 +79,9 @@ Attentionist retrieves information from the following research papers:
 
 * Python
 * Streamlit
-* Google Gemini API
-* ChromaDB (Vector Database)
+* Google Gemini API (via OpenAI-compatible endpoint)
+* `minsearch` (vector similarity search)
+* Local ONNX embeddings (`all-MiniLM-L6-v2`)
 * SQLite
 * Docker
 * Pandas
@@ -94,6 +95,8 @@ Attentionist retrieves information from the following research papers:
 Attentionist/
 │
 ├── app/                     # Streamlit application
+│   ├── app.py
+│   └── monitoring.py
 ├── src/                     # Core RAG pipeline
 │   ├── ingest.py
 │   ├── embedder.py
@@ -117,7 +120,6 @@ Attentionist/
 ├── Dockerfile
 ├── .dockerignore
 ├── .env.example
-├── monitoring.py
 ├── requirements.txt
 └── README.md
 ```
@@ -161,6 +163,33 @@ pip install -r requirements.txt
 
 ---
 
+# 📦 Embedding Model Setup (required)
+
+This project uses a local ONNX embedding model (`all-MiniLM-L6-v2`) for retrieval, which is **not included in the repository** due to file size.
+
+Download the model files and place them at `models/all-MiniLM-L6-v2/`:
+
+* `model.onnx`
+* `tokenizer.json`
+
+Source: [Xenova/all-MiniLM-L6-v2 on Hugging Face](https://huggingface.co/Xenova/all-MiniLM-L6-v2)
+
+The final folder structure should look like:
+```text
+models/
+└── all-MiniLM-L6-v2/
+    ├── model.onnx
+    └── tokenizer.json
+```
+
+Once the files are in place, build the knowledge base index:
+
+```bash
+python src/ingest.py
+```
+
+---
+
 # 🔑 Environment Variables
 
 Copy the example environment file:
@@ -171,10 +200,11 @@ cp .env.example .env
 
 Or, on Windows, manually create a `.env` file based on `.env.example`.
 
-Then add your Gemini API key:
+Then add your Gemini API keys (two keys are used to work around free-tier daily request limits — both are required for the app to run):
 
 ```text
 GEMINI_API_KEY=your_api_key_here
+NEW_GEMINI_API_KEY=your_second_api_key_here
 ```
 
 ---
@@ -199,10 +229,13 @@ Build the Docker image:
 docker build -t attentionist .
 ```
 
-Run the container:
+Run the container (both API keys are required):
 
 ```bash
-docker run -p 8501:8501 -e GEMINI_API_KEY=your_api_key_here attentionist
+docker run -p 8501:8501 \
+  -e GEMINI_API_KEY=your_api_key_here \
+  -e NEW_GEMINI_API_KEY=your_second_api_key_here \
+  attentionist
 ```
 
 Then open:
@@ -210,6 +243,8 @@ Then open:
 ```text
 http://localhost:8501
 ```
+
+**Note:** the embedding model files (`models/`) must be present on the host and mounted or copied into the image, as described in the Embedding Model Setup section above.
 
 Docker packages the application and all required dependencies into a portable container, ensuring the project runs consistently across different environments without requiring manual dependency installation.
 
@@ -227,11 +262,20 @@ python eval/generate_ground_truth.py
 
 ### Evaluate Retrieval
 
-Measures retrieval performance using metrics such as **Hit Rate** and **Mean Reciprocal Rank (MRR)**.
+Measures retrieval performance using **Hit Rate** and **Mean Reciprocal Rank (MRR)**, comparing two retrieval configurations:
 
 ```bash
 python eval/evaluate_retrieval.py
 ```
+
+**Results:**
+
+| Configuration | Hit Rate | MRR |
+|---|---|---|
+| top_k = 5 | 35.90% | 0.281 |
+| top_k = 10 | 53.85% | 0.306 |
+
+Increasing `top_k` from 5 to 10 substantially improved Hit Rate, indicating that a meaningful share of correct chunks exist just beyond the top-5 cutoff. MRR improved only modestly, suggesting these additional chunks tend to rank lower rather than climbing near the top. This is consistent with observed sensitivity of the embedding model (`all-MiniLM-L6-v2`) to query phrasing versus the papers' own technical vocabulary.
 
 ### Generate RAG Answers
 
@@ -251,6 +295,13 @@ python eval/generate_norag_answer.py
 python eval/judge_answer.py
 ```
 
+**Results (10 sampled questions per condition):**
+
+| Condition | Average Score (1-5) |
+|---|---|
+| RAG | 5.0 |
+| No-RAG (baseline) | 4.6 |
+
 Evaluation outputs are stored in:
 
 ```text
@@ -261,7 +312,7 @@ eval/results/
 
 # 📈 Monitoring
 
-Every interaction is automatically logged into a lightweight SQLite database.
+Every interaction is automatically logged into a lightweight SQLite database (`app/data/processed/monitoring.db`).
 
 For each conversation, the system stores:
 
@@ -274,6 +325,14 @@ For each conversation, the system stores:
 * User feedback (👍 / 👎)
 
 These logs can be used to monitor system usage and evaluate response quality over time.
+
+---
+
+# ⚠️ Known Limitations
+
+* **Ground-truth coverage**: due to Gemini free-tier API quota constraints during development, ground-truth generation completed for 5 of 9 papers (Attention Is All You Need, BERT, Reformer, Longformer, GPT-3). Retrieval and LLM-judge evaluation results above reflect this subset rather than the full 9-paper corpus.
+* **LLM-as-judge groundedness**: the current judge prompt evaluates general factual correctness rather than fully differentiating whether an answer is grounded in the retrieved context specifically. The RAG vs. no-RAG comparison above should be read as a preliminary signal rather than a definitive measure of retrieval-added-value.
+* **Query-phrasing sensitivity**: retrieval accuracy is sensitive to how closely a question's wording matches the papers' own technical vocabulary (e.g., "locality-sensitive hashing" retrieves more reliably than a paraphrase like "reduce attention complexity"), a known characteristic of general-purpose sentence embedding models like `all-MiniLM-L6-v2`.
 
 ---
 
@@ -291,11 +350,13 @@ These logs can be used to monitor system usage and evaluate response quality ove
 
 # 📌 Future Improvements
 
+* Complete ground-truth coverage across all 9 papers
+* Fix and re-run LLM-as-judge with a groundedness-aware prompt
 * Hybrid keyword + semantic retrieval
 * Retrieval reranking
+* Monitoring dashboard for feedback visualization
 * Conversation memory
 * Streaming responses
-* Support for additional transformer research papers
 * Cloud deployment
 * CI/CD pipeline with GitHub Actions
 
@@ -318,6 +379,5 @@ GitHub: https://github.com/malakhishams
 * DataTalksClub LLM Zoomcamp
 * Google Gemini
 * Hugging Face
-* ChromaDB
 * Streamlit
 * The authors of the transformer and attention research papers that form the project's knowledge base.
