@@ -16,3 +16,4 @@ opentelemetry-api
 opentelemetry-sdk 
 pypdf
 minsearch
+streamlit
