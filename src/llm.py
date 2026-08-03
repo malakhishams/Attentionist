@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 api_key = os.environ["GEMINI_API_KEY"]
-new_api_key = os.environ["NEW_GEMINI_API_KEY"]
+#new_api_key = os.environ["NEW_GEMINI_API_KEY"]
 
 client = OpenAI(
     api_key=api_key,
