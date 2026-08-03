@@ -1,6 +1,6 @@
 # 🧠 Attentionist
 
-**Attentionist** is a Retrieval-Augmented Generation (RAG) assistant designed to answer questions about transformer architectures and attention mechanisms. Rather than relying solely on a large language model's internal knowledge, Attentionist retrieves relevant passages from a curated collection of foundational research papers and generates grounded, source-backed answers using Google Gemini.
+**Attentionist** is a Retrieval-Augmented Generation (RAG) assistant designed to answer questions about transformer architectures and attention mechanisms. It retrieves relevant passages from a curated collection of nine foundational research papers and uses **Google Gemini** to generate grounded, source-backed responses, helping reduce hallucinations and improve factual accuracy.
 
 This project was developed as the final project for the **DataTalksClub LLM Zoomcamp 2026**.
 
@@ -8,7 +8,7 @@ This project was developed as the final project for the **DataTalksClub LLM Zoom
 
 # ✨ Features
 
-* 📚 Knowledge base built from **9 influential transformer and attention papers**
+* 📚 Knowledge base built from **9 influential transformer and attention research papers**
 * 🔍 Semantic retrieval using vector embeddings
 * 🤖 Grounded answer generation with **Google Gemini**
 * 💬 Interactive chat interface built with **Streamlit**
@@ -16,17 +16,18 @@ This project was developed as the final project for the **DataTalksClub LLM Zoom
 * 👍👎 User feedback collection for response quality
 * 📊 SQLite-based interaction monitoring
 * 📈 Retrieval and generation evaluation pipeline
+* 🐳 Dockerized deployment for reproducible execution
 
 ---
 
 # 📄 Knowledge Base
 
-The assistant retrieves information from the following research papers:
+Attentionist retrieves information from the following research papers:
 
 * Attention Is All You Need
 * BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding
 * Language Models are Few-Shot Learners (GPT-3)
-* An Image is Worth 16x16 Words (Vision Transformer)
+* An Image is Worth 16×16 Words (Vision Transformer)
 * Reformer
 * Longformer
 * Performer
@@ -77,6 +78,7 @@ The assistant retrieves information from the following research papers:
 * Google Gemini API
 * ChromaDB (Vector Database)
 * SQLite
+* Docker
 * Pandas
 * NumPy
 
@@ -108,6 +110,10 @@ Attentionist/
 │   ├── raw/
 │   └── processed/
 │
+├── Dockerfile
+├── .dockerignore
+├── .env.example
+├── monitoring.py
 ├── requirements.txt
 └── README.md
 ```
@@ -129,21 +135,21 @@ Create a virtual environment:
 python -m venv .venv
 ```
 
-Activate it:
+Activate it.
 
-Windows
+**Windows**
 
 ```bash
 .venv\Scripts\activate
 ```
 
-Linux / macOS
+**Linux / macOS**
 
 ```bash
 source .venv/bin/activate
 ```
 
-Install dependencies:
+Install the required dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -153,10 +159,18 @@ pip install -r requirements.txt
 
 # 🔑 Environment Variables
 
-Create a `.env` file and add your Gemini API key:
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Or, on Windows, manually create a `.env` file based on `.env.example`.
+
+Then add your Gemini API key:
 
 ```text
-GEMINI_API_KEY=your_api_key
+GEMINI_API_KEY=your_api_key_here
 ```
 
 ---
@@ -169,13 +183,37 @@ Launch the Streamlit interface:
 streamlit run app/app.py
 ```
 
-Open the URL displayed in your terminal.
+Then open the local URL displayed in your terminal (typically `http://localhost:8501`).
+
+---
+
+# 🐳 Running with Docker
+
+Build the Docker image:
+
+```bash
+docker build -t attentionist .
+```
+
+Run the container:
+
+```bash
+docker run -p 8501:8501 -e GEMINI_API_KEY=your_api_key_here attentionist
+```
+
+Then open:
+
+```text
+http://localhost:8501
+```
+
+Docker packages the application and all required dependencies into a portable container, ensuring the project runs consistently across different environments without requiring manual dependency installation.
 
 ---
 
 # 📊 Evaluation Pipeline
 
-The repository includes a complete evaluation workflow.
+The repository includes a complete evaluation workflow for both retrieval quality and answer quality.
 
 ### Generate Ground Truth
 
@@ -185,19 +223,19 @@ python eval/generate_ground_truth.py
 
 ### Evaluate Retrieval
 
-Measures retrieval quality using metrics such as Hit Rate and Mean Reciprocal Rank (MRR).
+Measures retrieval performance using metrics such as **Hit Rate** and **Mean Reciprocal Rank (MRR)**.
 
 ```bash
 python eval/evaluate_retrieval.py
 ```
 
-### Generate Answers with RAG
+### Generate RAG Answers
 
 ```bash
 python eval/generate_rag_answers.py
 ```
 
-### Generate Baseline (No RAG)
+### Generate Baseline (Without RAG)
 
 ```bash
 python eval/generate_norag_answer.py
@@ -209,7 +247,7 @@ python eval/generate_norag_answer.py
 python eval/judge_answer.py
 ```
 
-Evaluation outputs are stored inside:
+Evaluation outputs are stored in:
 
 ```text
 eval/results/
@@ -221,7 +259,7 @@ eval/results/
 
 Every interaction is automatically logged into a lightweight SQLite database.
 
-For each conversation the system stores:
+For each conversation, the system stores:
 
 * Timestamp
 * User question
@@ -250,12 +288,12 @@ These logs can be used to monitor system usage and evaluate response quality ove
 # 📌 Future Improvements
 
 * Hybrid keyword + semantic retrieval
-* Reranking retrieved passages
+* Retrieval reranking
 * Conversation memory
 * Streaming responses
 * Support for additional transformer research papers
-* Docker deployment
 * Cloud deployment
+* CI/CD pipeline with GitHub Actions
 
 ---
 
@@ -278,3 +316,4 @@ GitHub: https://github.com/malakhishams
 * Hugging Face
 * ChromaDB
 * Streamlit
+* The authors of the transformer and attention research papers that form the project's knowledge base.
