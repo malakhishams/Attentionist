@@ -28,7 +28,7 @@ def ask_llm(prompt, model="gemini-2.5-flash", system_prompt=None):
 
     messages.append({"role":"user", "content":prompt})
 
-    response = client.chat.completions.create(model=model,messages=messages)
+    response = new_client.chat.completions.create(model=model,messages=messages)
 
     return response.choices[0].message.content
 

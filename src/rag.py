@@ -28,7 +28,7 @@ def answer_query(query, top_k=5):
 
 if __name__ == "__main__":
     query = "What is locality-sensitive hashing attention in Reformer?"
-    answer, sources = answer_query(query)
+    answer, sources, chunks = answer_query(query)
 
     print("Question:", query)
     print("\nAnswer:\n", answer)
