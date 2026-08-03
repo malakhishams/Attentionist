@@ -12,10 +12,10 @@ client = OpenAI(
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 )
 
-new_client = OpenAI(
+'''new_client = OpenAI(
     api_key=new_api_key,
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
-)
+)'''
 
 ###############################################################################################
 
@@ -28,7 +28,7 @@ def ask_llm(prompt, model="gemini-2.5-flash", system_prompt=None):
 
     messages.append({"role":"user", "content":prompt})
 
-    response = new_client.chat.completions.create(model=model,messages=messages)
+    response = client.chat.completions.create(model=model,messages=messages)
 
     return response.choices[0].message.content
 
