@@ -8,7 +8,7 @@ This project was developed as the final project for the **DataTalksClub LLM Zoom
 
 ## Demo
 
-![Attentionist Demo](docs/demo.png)
+![Attentionist Demo](docs/demo.jpeg)
 
 # ✨ Features
 
